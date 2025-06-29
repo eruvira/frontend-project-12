@@ -2,4 +2,4 @@ build:
 	cd frontend && npm install && npm run build
 
 start:
-	npx chat-server --static frontend/dist
+	node ./node_modules/@hexlet/chat-server/dist/server.js --static frontend/dist
