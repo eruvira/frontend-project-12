@@ -50,18 +50,19 @@ const ChannelList = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <Button
                   variant={variant}
-                  className="w-100 text-start rounded-0"
+                  className="w-100 text-start rounded-start"
                   onClick={() => handleSelectChannel(channel.id)}
                 >
                   # {channel.name}
                 </Button>
 
                 {channel.removable && (
-                  <Dropdown as={ButtonGroup}>
+                  <Dropdown as={ButtonGroup} >
                     <Dropdown.Toggle
                       split
                       variant={variant}
                       id={`dropdown-${channel.id}`}
+                      className="rounded-end"
                     />
                     <Dropdown.Menu>
                       <Dropdown.Item

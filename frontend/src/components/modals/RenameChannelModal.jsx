@@ -7,6 +7,8 @@ import axios from 'axios'
 import { closeModal } from '../../store/slices/modalSlice'
 import { renameChannel } from '../../store/slices/channelsSlice'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch()
@@ -47,6 +49,7 @@ const RenameChannelModal = () => {
         )
         dispatch(renameChannel(response.data))
         dispatch(closeModal())
+        toast.success(t('toasts.channelRenamed'))
       } catch (err) {
         setErrors({ name: 'Ошибка переименования' })
       } finally {

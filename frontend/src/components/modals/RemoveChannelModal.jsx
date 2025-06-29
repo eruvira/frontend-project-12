@@ -6,6 +6,8 @@ import { closeModal } from '../../store/slices/modalSlice'
 import { removeChannel } from '../../store/slices/channelsSlice'
 import { setCurrentChannelId } from '../../store/slices/currentChannelSlice'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch()
@@ -18,10 +20,10 @@ const RemoveChannelModal = () => {
       await axios.delete(`/api/v1/channels/${channelId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-
       dispatch(removeChannel(channelId))
       dispatch(setCurrentChannelId(1))
       dispatch(closeModal())
+       toast.success(t('toasts.channelRemoved'))
     } catch (error) {
       console.error('Ошибка удаления канала:', error)
     }

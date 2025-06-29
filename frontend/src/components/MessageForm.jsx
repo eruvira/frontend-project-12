@@ -36,7 +36,7 @@ const MessageForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="input-group">
+      <div className="input-group mt-4">
         <input
           className="form-control"
           type="text"

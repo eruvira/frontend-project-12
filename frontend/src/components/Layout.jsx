@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 const Layout = () => {
   const { t } = useTranslation()
   return (
-    <div className="min-vh-100 d-flex flex-column bg-light">
+    <div className="min-vh-100 d-flex flex-column bg-light min-vw-100">
       <Header />
 
       <main className="container my-4 flex-grow-1">

@@ -37,7 +37,6 @@
     "add": "Добавить",
     "sureToDelete": "Вы уверены, что хотите удалить этот канал?",
     "delete": "Удалить"
-
   },
   "notFound": {
     "header": "Страница не найдена",
@@ -48,5 +47,11 @@
     "logo": "Hexlet Chat",
     "logout": "Выйти",
     "footer": "© 2025 Hexlet Chat"
+  },
+  "toasts": {
+    "networkError": "Ошибка сети",
+    "channelCreated": "Канал создан",
+    "channelRemoved": "Канал удалён",
+    "channelRenamed": "Канал переименован"
   }
 }

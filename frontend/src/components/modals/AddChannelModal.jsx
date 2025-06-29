@@ -6,6 +6,7 @@ import axios from 'axios'
 import { setCurrentChannelId } from '../../store/slices/currentChannelSlice'
 import { closeModal } from '../../store/slices/modalSlice'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 
 const AddChannelModal = () => {
@@ -44,6 +45,7 @@ const AddChannelModal = () => {
       const { id } = response.data
       dispatch(setCurrentChannelId(id)) 
       dispatch(closeModal())
+      toast.success(t('toasts.channelCreated'))
     } catch (e) {
       console.error(e)
     } finally {
