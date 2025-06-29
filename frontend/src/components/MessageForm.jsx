@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import leoProfanity from 'leo-profanity'
 
 const MessageForm = () => {
   const [body, setBody] = useState('')
@@ -15,8 +16,10 @@ const MessageForm = () => {
     e.preventDefault()
     setError(null)
 
+    const cleanedBody = leoProfanity.clean(body)
+
     const newMessage = {
-      body,
+      body: cleanedBody,
       channelId: currentChannelId,
       username,
     }
@@ -30,7 +33,7 @@ const MessageForm = () => {
       setBody('')
     } catch (err) {
       console.error(err)
-      setError('Ошибка отправки. Проверьте соединение.')
+      setError(t('chat.sendError'))
     }
   }
 

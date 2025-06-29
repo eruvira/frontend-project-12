@@ -8,7 +8,7 @@ import { closeModal } from '../../store/slices/modalSlice'
 import { renameChannel } from '../../store/slices/channelsSlice'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
+import leoProfanity from 'leo-profanity'
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch()
@@ -38,9 +38,11 @@ const RenameChannelModal = () => {
     }),
     onSubmit: async ({ name }, { setSubmitting, setErrors }) => {
       try {
+        const cleanedName = leoProfanity.clean(name.trim())
+
         const response = await axios.patch(
           `/api/v1/channels/${channelId}`,
-          { name },
+          { name: cleanedName },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -51,7 +53,7 @@ const RenameChannelModal = () => {
         dispatch(closeModal())
         toast.success(t('toasts.channelRenamed'))
       } catch (err) {
-        setErrors({ name: 'Ошибка переименования' })
+        setErrors({ name: t('modals.renameError') })
       } finally {
         setSubmitting(false)
       }
@@ -89,7 +91,7 @@ const RenameChannelModal = () => {
             variant="primary"
             disabled={formik.isSubmitting}
           >
-             {t('modals.confirm')}
+            {t('modals.confirm')}
           </Button>
         </Modal.Footer>
       </Form>

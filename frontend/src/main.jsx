@@ -7,6 +7,10 @@ import { BrowserRouter } from 'react-router-dom'
 import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './i18n'
+import leoProfanity from 'leo-profanity'
+
+leoProfanity.loadDictionary('ru')
+leoProfanity.add(leoProfanity.getDictionary('en'))
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

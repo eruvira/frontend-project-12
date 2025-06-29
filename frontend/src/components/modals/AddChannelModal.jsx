@@ -7,7 +7,7 @@ import { setCurrentChannelId } from '../../store/slices/currentChannelSlice'
 import { closeModal } from '../../store/slices/modalSlice'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
+import leoProfanity from 'leo-profanity'
 
 const AddChannelModal = () => {
   const dispatch = useDispatch()
@@ -33,21 +33,22 @@ const AddChannelModal = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
+      const cleanedName = leoProfanity.clean(values.name.trim())
+
       const response = await axios.post(
         '/api/v1/channels',
-        {
-          name: values.name.trim(),
-        },
+        { name: cleanedName },
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       )
       const { id } = response.data
-      dispatch(setCurrentChannelId(id)) 
+      dispatch(setCurrentChannelId(id))
       dispatch(closeModal())
       toast.success(t('toasts.channelCreated'))
     } catch (e) {
       console.error(e)
+      toast.error(t('toasts.networkError'))
     } finally {
       actions.setSubmitting(false)
     }
