@@ -1,0 +1,93 @@
+import React, { useEffect, useRef } from 'react'
+import {
+  Modal, Form, Button,
+} from 'react-bootstrap'
+import { useSelector, useDispatch } from 'react-redux'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import axios from 'axios'
+import { closeModal } from '../../store/slices/modalSlice'
+import { renameChannel } from '../../store/slices/channelsSlice'
+
+const RenameChannelModal = () => {
+  const dispatch = useDispatch()
+  const { channelId } = useSelector((state) => state.modal)
+  const channels = useSelector((state) => state.channels)
+  const channel = channels.find((c) => c.id === channelId)
+  const { token } = useSelector((state) => state.auth.user)
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    inputRef.current?.select()
+  }, [])
+
+  const channelNames = channels.map((c) => c.name)
+
+  const formik = useFormik({
+    initialValues: {
+      name: channel?.name || '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .required('Обязательное поле')
+        .min(3, 'От 3 до 20 символов')
+        .max(20, 'Макс. 20 символов')
+        .notOneOf(channelNames, 'Имя должно быть уникальным'),
+    }),
+    onSubmit: async ({ name }, { setSubmitting, setErrors }) => {
+      try {
+        const response = await axios.patch(
+          `/api/v1/channels/${channelId}`,
+          { name },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        dispatch(renameChannel(response.data))
+        dispatch(closeModal())
+      } catch (err) {
+        setErrors({ name: 'Ошибка переименования' })
+      } finally {
+        setSubmitting(false)
+      }
+    },
+  })
+
+  return (
+    <Modal show onHide={() => dispatch(closeModal())}>
+      <Modal.Header closeButton>
+        <Modal.Title>Переименовать канал</Modal.Title>
+      </Modal.Header>
+      <Form onSubmit={formik.handleSubmit}>
+        <Modal.Body>
+          <Form.Group controlId="channelName">
+            <Form.Control
+              name="name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+              isInvalid={formik.touched.name && !!formik.errors.name}
+              ref={inputRef}
+              autoFocus
+            />
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.name}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => dispatch(closeModal())}>
+            Отмена
+          </Button>
+          <Button type="submit" variant="primary" disabled={formik.isSubmitting}>
+            Переименовать
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
+  )
+}
+
+export default RenameChannelModal

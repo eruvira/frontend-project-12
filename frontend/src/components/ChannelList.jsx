@@ -1,31 +1,86 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Button, Dropdown, ButtonGroup } from 'react-bootstrap'
 import { setCurrentChannelId } from '../store/slices/currentChannelSlice'
+import { setModal } from '../store/slices/modalSlice'
 
 const ChannelList = () => {
   const dispatch = useDispatch()
   const channels = useSelector((state) => state.channels)
   const currentChannelId = useSelector((state) => state.currentChannel)
 
-  const handleClick = (id) => {
+  const handleSelectChannel = (id) => {
     dispatch(setCurrentChannelId(id))
   }
 
+  const handleAddChannel = () => {
+    dispatch(setModal({ type: 'add' }))
+  }
+
+  const handleRenameChannel = (channelId) => {
+    dispatch(setModal({ type: 'rename', channelId }))
+  }
+
+  const handleRemoveChannel = (channelId) => {
+    dispatch(setModal({ type: 'remove', channelId }))
+  }
+
   return (
-    <ul className="list-group">
-      {channels.map((channel) => (
-        <li
-          key={channel.id}
-          className={`list-group-item list-group-item-action ${
-            channel.id === currentChannelId ? 'active' : ''
-          }`}
-          onClick={() => handleClick(channel.id)}
-          role="button"
+    <div className="p-3 border-end h-100 bg-light">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h5 className="mb-0">Каналы</h5>
+        <Button
+          variant="outline-primary"
+          size="sm"
+          onClick={handleAddChannel}
         >
-          {channel.name}
-        </li>
-      ))}
-    </ul>
+          + Добавить
+        </Button>
+      </div>
+
+      <ul className="list-group overflow-auto">
+        {channels.map((channel) => {
+          const isActive = channel.id === currentChannelId
+          const variant = isActive ? 'primary' : 'light'
+
+          return (
+            <li key={channel.id} className="list-group-item p-0 border-0">
+              <div className="d-flex align-items-center justify-content-between">
+                <Button
+                  variant={variant}
+                  className="w-100 text-start rounded-0"
+                  onClick={() => handleSelectChannel(channel.id)}
+                >
+                  # {channel.name}
+                </Button>
+
+                {channel.removable && (
+                  <Dropdown as={ButtonGroup}>
+                    <Dropdown.Toggle
+                      split
+                      variant={variant}
+                      id={`dropdown-${channel.id}`}
+                    />
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        onClick={() => handleRenameChannel(channel.id)}
+                      >
+                        Переименовать
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => handleRemoveChannel(channel.id)}
+                      >
+                        Удалить
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 

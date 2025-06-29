@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = 1 
+
 const currentChannelSlice = createSlice({
   name: 'currentChannel',
-  initialState: 1, 
+  initialState,
   reducers: {
     setCurrentChannelId: (state, action) => action.payload,
   },

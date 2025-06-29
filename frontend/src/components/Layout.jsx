@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import Modals from './Modals'
 
 const Layout = () => (
   <div className="min-vh-100 d-flex flex-column bg-light">
@@ -11,6 +12,7 @@ const Layout = () => (
 
     <main className="container my-4 flex-grow-1">
       <Outlet />
+      <Modals /> 
     </main>
 
     <footer className="bg-dark text-white text-center p-3 mt-auto">

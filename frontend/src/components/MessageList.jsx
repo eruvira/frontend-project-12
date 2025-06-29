@@ -1,28 +1,23 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const MessageList = () => {
+const Messages = () => {
   const messages = useSelector((state) => state.messages)
   const currentChannelId = useSelector((state) => state.currentChannel)
 
   const filteredMessages = messages.filter(
-    (message) => message.channelId === currentChannelId,
+    (m) => m.channelId === currentChannelId
   )
 
   return (
-    <div>
-      <div className="mb-2">
-        <b>{filteredMessages.length}</b> сообщений
-      </div>
-      <ul className="list-group mb-3">
-        {filteredMessages.map((message) => (
-          <li key={message.id} className="list-group-item border-0 ps-0">
-            <b>{message.username}</b>: {message.body}
-          </li>
-        ))}
-      </ul>
+    <div className="messages">
+      {filteredMessages.map((msg) => (
+        <div key={msg.id}>
+          <b>{msg.username}</b>: {msg.body}
+        </div>
+      ))}
     </div>
   )
 }
 
-export default MessageList
+export default Messages
