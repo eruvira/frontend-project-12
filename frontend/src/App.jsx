@@ -4,11 +4,19 @@ import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
+import PrivateRoute from './components/PrivateRoute'
 
 const App = () => (
   <Routes>
     <Route path="/" element={<Layout />}>
-      <Route index element={<HomePage />} />
+      <Route
+        index
+        element={(
+          <PrivateRoute>
+            <HomePage />
+          </PrivateRoute>
+        )}
+      />
       <Route path="login" element={<LoginPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>
