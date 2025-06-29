@@ -5,6 +5,8 @@ import * as yup from 'yup'
 import axios from 'axios'
 import { setCurrentChannelId } from '../../store/slices/currentChannelSlice'
 import { closeModal } from '../../store/slices/modalSlice'
+import { useTranslation } from 'react-i18next'
+
 
 const AddChannelModal = () => {
   const dispatch = useDispatch()
@@ -12,6 +14,7 @@ const AddChannelModal = () => {
   const channels = useSelector((state) => state.channels)
   const existingNames = channels.map((c) => c.name)
   const { token } = useSelector((state) => state.auth.user)
+  const { t } = useTranslation()
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -21,10 +24,10 @@ const AddChannelModal = () => {
     name: yup
       .string()
       .trim()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле')
-      .notOneOf(existingNames, 'Имя должно быть уникальным'),
+      .min(3, t('modals.lengthError'))
+      .max(20, t('modals.lengthError'))
+      .required(t('modals.requiredError'))
+      .notOneOf(existingNames, t('modals.uniqueError')),
   })
 
   const handleSubmit = async (values, actions) => {
@@ -39,7 +42,7 @@ const AddChannelModal = () => {
         },
       )
       const { id } = response.data
-      dispatch(setCurrentChannelId(id)) // переходим в созданный канал
+      dispatch(setCurrentChannelId(id)) 
       dispatch(closeModal())
     } catch (e) {
       console.error(e)
@@ -52,7 +55,7 @@ const AddChannelModal = () => {
     <div className="modal show d-block" tabIndex="-1">
       <div className="modal-dialog">
         <div className="modal-content p-4">
-          <h5 className="modal-title mb-3">Добавить канал</h5>
+          <h5 className="modal-title mb-3">{t('modals.addChannel')}</h5>
           <Formik
             initialValues={{ name: '' }}
             validationSchema={validationSchema}
@@ -64,7 +67,7 @@ const AddChannelModal = () => {
                   name="name"
                   innerRef={inputRef}
                   className="form-control mb-2"
-                  placeholder="Имя канала"
+                  placeholder={t('modals.channelName')}
                 />
                 <ErrorMessage
                   name="name"
@@ -77,7 +80,7 @@ const AddChannelModal = () => {
                     className="btn btn-primary"
                     disabled={isSubmitting}
                   >
-                    Добавить
+                    {t('modals.add')}
                   </button>
                 </div>
               </Form>

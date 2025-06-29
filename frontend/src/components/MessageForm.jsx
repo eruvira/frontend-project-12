@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 const MessageForm = () => {
   const [body, setBody] = useState('')
   const [error, setError] = useState(null)
+  const { t } = useTranslation()
 
   const currentChannelId = useSelector((state) => state.currentChannel)
   const { token, username } = useSelector((state) => state.auth.user)
@@ -38,13 +40,13 @@ const MessageForm = () => {
         <input
           className="form-control"
           type="text"
-          placeholder="Введите сообщение"
+          placeholder={t('chat.placeholder')}
           value={body}
           onChange={(e) => setBody(e.target.value)}
           required
         />
         <button className="btn btn-primary" type="submit">
-          Отправить
+          {t('chat.send')}
         </button>
       </div>
       {error && <div className="text-danger mt-2">{error}</div>}

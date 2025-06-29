@@ -7,9 +7,11 @@ import ChannelList from '../components/ChannelList'
 import MessageForm from '../components/MessageForm'
 import useChatSocket from '../hooks/useChatSocket'
 import MessageList from '../components/MessageList'
+import { useTranslation } from 'react-i18next'
 
 const HomePage = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const { token } = useSelector((state) => state.auth.user)
 
   useChatSocket()
@@ -41,7 +43,7 @@ const HomePage = () => {
           <ChannelList />
         </div>
         <div className="col-8">
-          <h4>Сообщения</h4>
+          <h4> {t('chat.messages')}</h4>
           <MessageList />
           <MessageForm />
         </div>

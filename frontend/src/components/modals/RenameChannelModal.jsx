@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react'
-import {
-  Modal, Form, Button,
-} from 'react-bootstrap'
+import { Modal, Form, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { closeModal } from '../../store/slices/modalSlice'
 import { renameChannel } from '../../store/slices/channelsSlice'
+import { useTranslation } from 'react-i18next'
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const { channelId } = useSelector((state) => state.modal)
   const channels = useSelector((state) => state.channels)
   const channel = channels.find((c) => c.id === channelId)
@@ -29,10 +29,10 @@ const RenameChannelModal = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .required('Обязательное поле')
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'Макс. 20 символов')
-        .notOneOf(channelNames, 'Имя должно быть уникальным'),
+        .required(t('modals.requiredError'))
+        .min(3, t('modals.lengthError'))
+        .max(20, t('modals.lengthError'))
+        .notOneOf(channelNames, t('modals.uniqueError')),
     }),
     onSubmit: async ({ name }, { setSubmitting, setErrors }) => {
       try {
@@ -58,7 +58,7 @@ const RenameChannelModal = () => {
   return (
     <Modal show onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
@@ -79,10 +79,14 @@ const RenameChannelModal = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => dispatch(closeModal())}>
-            Отмена
+            {t('modals.cancel')}
           </Button>
-          <Button type="submit" variant="primary" disabled={formik.isSubmitting}>
-            Переименовать
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={formik.isSubmitting}
+          >
+             {t('modals.confirm')}
           </Button>
         </Modal.Footer>
       </Form>

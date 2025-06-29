@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap'
 import { setCurrentChannelId } from '../store/slices/currentChannelSlice'
 import { setModal } from '../store/slices/modalSlice'
+import { useTranslation } from 'react-i18next'
 
 const ChannelList = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const channels = useSelector((state) => state.channels)
   const currentChannelId = useSelector((state) => state.currentChannel)
 
@@ -28,7 +30,7 @@ const ChannelList = () => {
   return (
     <div className="p-3 border-end h-100 bg-light">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Каналы</h5>
+        <h5 className="mb-0">{t('chat.channels')}</h5>
         <Button
           variant="outline-primary"
           size="sm"
@@ -65,12 +67,12 @@ const ChannelList = () => {
                       <Dropdown.Item
                         onClick={() => handleRenameChannel(channel.id)}
                       >
-                        Переименовать
+                        {t('chat.rename')}
                       </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => handleRemoveChannel(channel.id)}
                       >
-                        Удалить
+                        {t('modals.delete')}
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>

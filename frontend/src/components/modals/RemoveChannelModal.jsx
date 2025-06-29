@@ -5,11 +5,13 @@ import axios from 'axios'
 import { closeModal } from '../../store/slices/modalSlice'
 import { removeChannel } from '../../store/slices/channelsSlice'
 import { setCurrentChannelId } from '../../store/slices/currentChannelSlice'
+import { useTranslation } from 'react-i18next'
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch()
   const { channelId } = useSelector((state) => state.modal)
   const { token } = useSelector((state) => state.auth.user)
+  const { t } = useTranslation()
 
   const handleRemove = async () => {
     try {
@@ -18,7 +20,7 @@ const RemoveChannelModal = () => {
       })
 
       dispatch(removeChannel(channelId))
-      dispatch(setCurrentChannelId(1)) 
+      dispatch(setCurrentChannelId(1))
       dispatch(closeModal())
     } catch (error) {
       console.error('Ошибка удаления канала:', error)
@@ -28,17 +30,17 @@ const RemoveChannelModal = () => {
   return (
     <Modal show onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Удаление канала</Modal.Title>
+        <Modal.Title>{t('chat.removeChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Вы уверены, что хотите удалить этот канал?</p>
+        <p>{t('chat.sureToDelete')}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => dispatch(closeModal())}>
-          Отмена
+          {t('chat.cancel')}
         </Button>
         <Button variant="danger" onClick={handleRemove}>
-          Удалить
+           {t('chat.delete')}
         </Button>
       </Modal.Footer>
     </Modal>

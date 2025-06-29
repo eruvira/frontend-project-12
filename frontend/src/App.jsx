@@ -7,6 +7,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import PrivateRoute from './components/PrivateRoute'
 import SignupPage from './pages/SignupPage'
 
+
 const App = () => (
   <Routes>
     <Route path="/" element={<Layout />}>

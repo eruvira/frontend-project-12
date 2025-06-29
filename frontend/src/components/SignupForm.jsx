@@ -3,13 +3,15 @@ import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux' 
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { login } from '../store/slices/authSlice' 
+import { login } from '../store/slices/authSlice'
+import { useTranslation } from 'react-i18next'
 
 const SignupForm = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch() 
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   const formik = useFormik({
     initialValues: {
@@ -19,15 +21,15 @@ const SignupForm = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .required('Обязательное поле'),
+        .min(3, t('modals.lengthError'))
+        .max(20, t('modals.lengthError'))
+        .required(t('modals.requiredError')),
       password: Yup.string()
         .min(6, 'Не менее 6 символов')
-        .required('Обязательное поле'),
+        .required(t('modals.requiredError')),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Пароли должны совпадать')
-        .required('Обязательное поле'),
+        .required(t('modals.requiredError')),
     }),
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
@@ -41,11 +43,11 @@ const SignupForm = () => {
           token: response.data.token,
         }
 
-        dispatch(login(userData))      // ✅ сохраняем пользователя
-        navigate('/')                  // ✅ редирект в чат
+        dispatch(login(userData)) 
+        navigate('/')
       } catch (err) {
         if (err.response?.status === 409) {
-          setErrors({ username: 'Пользователь уже существует' })
+          setErrors({ username: t('signup.userExists') })
         } else {
           console.error(err)
           setErrors({ username: 'Произошла ошибка регистрации' })
@@ -60,7 +62,7 @@ const SignupForm = () => {
     <Form onSubmit={formik.handleSubmit}>
       <FloatingLabel
         controlId="username"
-        label="Имя пользователя"
+        label={t('signup.username')}
         className="mb-3"
       >
         <Form.Control
@@ -75,7 +77,7 @@ const SignupForm = () => {
         </Form.Control.Feedback>
       </FloatingLabel>
 
-      <FloatingLabel controlId="password" label="Пароль" className="mb-3">
+      <FloatingLabel controlId="password" label={t('signup.password')} className="mb-3">
         <Form.Control
           type="password"
           name="password"
@@ -91,7 +93,7 @@ const SignupForm = () => {
 
       <FloatingLabel
         controlId="confirmPassword"
-        label="Подтвердите пароль"
+        label={t('signup.confirmPassword')}
         className="mb-3"
       >
         <Form.Control
@@ -110,7 +112,7 @@ const SignupForm = () => {
       </FloatingLabel>
 
       <Button type="submit" className="w-100" disabled={formik.isSubmitting}>
-        Зарегистрироваться
+        {t('signup.submit')}
       </Button>
     </Form>
   )

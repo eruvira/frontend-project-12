@@ -1,0 +1,52 @@
+{
+  "login": {
+    "header": "Войти",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "submit": "Войти",
+    "signupPrompt": "Нет аккаунта? ",
+    "authFailed": "Неверные имя пользователя или пароль",
+    "signUp": "Зарегистрируйтесь"
+  },
+  "signup": {
+    "header": "Регистрация",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "submit": "Зарегистрироваться",
+    "userExists": "Пользователь уже существует"
+  },
+  "chat": {
+    "send": "Отправить",
+    "placeholder": "Введите сообщение...",
+    "messages": "Сообщения",
+    "channels": "Каналы",
+    "addChanel": "Добавить",
+    "rename": "Переименовать"
+  },
+  "modals": {
+    "addChannel": "Добавить канал",
+    "removeChannel": "Удалить канал",
+    "renameChannel": "Переименовать канал",
+    "confirm": "Подтвердить",
+    "cancel": "Отмена",
+    "channelName": "Имя канала",
+    "lengthError": "От 3 до 20 символов",
+    "requiredError": "Обязательное поле",
+    "uniqueError": "Имя должно быть уникальным",
+    "add": "Добавить",
+    "sureToDelete": "Вы уверены, что хотите удалить этот канал?",
+    "delete": "Удалить"
+
+  },
+  "notFound": {
+    "header": "Страница не найдена",
+    "noExist": "Такой страницы не существует",
+    "goHome": "Перейти на главную"
+  },
+  "nav": {
+    "logo": "Hexlet Chat",
+    "logout": "Выйти",
+    "footer": "© 2025 Hexlet Chat"
+  }
+}

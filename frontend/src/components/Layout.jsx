@@ -2,22 +2,26 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Modals from './Modals'
 import Header from './Header'
+import { useTranslation } from 'react-i18next'
 
-const Layout = () => (
-  <div className="min-vh-100 d-flex flex-column bg-light">
-    <Header />
+const Layout = () => {
+  const { t } = useTranslation()
+  return (
+    <div className="min-vh-100 d-flex flex-column bg-light">
+      <Header />
 
-    <main className="container my-4 flex-grow-1">
-      <Outlet />
-      <Modals />
-    </main>
+      <main className="container my-4 flex-grow-1">
+        <Outlet />
+        <Modals />
+      </main>
 
-    <footer className="bg-dark text-white text-center p-3 mt-auto">
-      <div className="container">
-        <small>© 2025 Hexlet Chat</small>
-      </div>
-    </footer>
-  </div>
-)
+      <footer className="bg-dark text-white text-center p-3 mt-auto">
+        <div className="container">
+          <small>{t('nav.footer')}</small>
+        </div>
+      </footer>
+    </div>
+  )
+}
 
 export default Layout
