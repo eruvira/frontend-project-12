@@ -3,13 +3,13 @@ import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux' // ✅ импорт dispatch
+import { useDispatch } from 'react-redux' 
 import axios from 'axios'
-import { login } from '../store/slices/authSlice' // ✅ импорт login
+import { login } from '../store/slices/authSlice' 
 
 const SignupForm = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch() // ✅ инициализация dispatch
+  const dispatch = useDispatch() 
 
   const formik = useFormik({
     initialValues: {
