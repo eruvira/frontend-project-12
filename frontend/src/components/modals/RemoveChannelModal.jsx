@@ -25,6 +25,7 @@ const RemoveChannelModal = () => {
       dispatch(closeModal())
        toast.success(t('toasts.channelRemoved'))
     } catch (error) {
+      toast.error(t('toasts.networkError'))
       console.error('Ошибка удаления канала:', error)
     }
   }

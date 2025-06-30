@@ -6,6 +6,7 @@ import axios from 'axios'
 import { login } from '../store/slices/authSlice'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -30,6 +31,7 @@ const LoginPage = () => {
             if (err.response?.status === 401) {
               setAuthFailed(true)
             } else {
+              toast.error(t('toasts.networkError'))
               console.error('Login error:', err)
             }
           }

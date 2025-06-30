@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { login } from '../store/slices/authSlice'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 const SignupForm = () => {
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ const SignupForm = () => {
         .min(6, 'Не менее 6 символов')
         .required(t('modals.requiredError')),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Пароли должны совпадать')
+        .oneOf([Yup.ref('password')], t('modals.passwordMatchError'))
         .required(t('modals.requiredError')),
     }),
     onSubmit: async (values, { setSubmitting, setErrors }) => {
@@ -47,10 +48,12 @@ const SignupForm = () => {
         navigate('/')
       } catch (err) {
         if (err.response?.status === 409) {
+          toast.error(t('signup.userExists'))
           setErrors({ username: t('signup.userExists') })
         } else {
           console.error(err)
-          setErrors({ username: 'Произошла ошибка регистрации' })
+          toast.error(t('signup.authError'))
+          setErrors({ username: t('signup.authError') })
         }
       } finally {
         setSubmitting(false)

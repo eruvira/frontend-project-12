@@ -8,6 +8,7 @@ import MessageForm from '../components/MessageForm'
 import useChatSocket from '../hooks/useChatSocket'
 import MessageList from '../components/MessageList'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 const HomePage = () => {
   const dispatch = useDispatch()
@@ -29,6 +30,7 @@ const HomePage = () => {
         })
         dispatch(setMessages(messagesResponse.data))
       } catch (err) {
+        toast.error(t('toasts.networkError'))
         console.error('Ошибка при загрузке каналов и сообщений:', err)
       }
     }

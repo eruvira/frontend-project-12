@@ -53,6 +53,7 @@ const RenameChannelModal = () => {
         dispatch(closeModal())
         toast.success(t('toasts.channelRenamed'))
       } catch (err) {
+        toast.error(t('toasts.networkError'))
         setErrors({ name: t('modals.renameError') })
       } finally {
         setSubmitting(false)

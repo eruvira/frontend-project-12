@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 import leoProfanity from 'leo-profanity'
+import { toast } from 'react-toastify'
 
 const MessageForm = () => {
   const [body, setBody] = useState('')
@@ -33,6 +34,7 @@ const MessageForm = () => {
       setBody('')
     } catch (err) {
       console.error(err)
+      toast.error(t('toasts.networkError'))
       setError(t('chat.sendError'))
     }
   }
