@@ -3,7 +3,7 @@ import { Modal, Form, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
+import axios from '../../api/axiosInstance'
 import { closeModal } from '../../store/slices/modalSlice'
 import { renameChannel } from '../../store/slices/channelsSlice'
 import { useTranslation } from 'react-i18next'
@@ -13,10 +13,10 @@ import leoProfanity from 'leo-profanity'
 const RenameChannelModal = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { channelId } = useSelector((state) => state.modal)
   const channels = useSelector((state) => state.channels)
   const channel = channels.find((c) => c.id === channelId)
-  const { token } = useSelector((state) => state.auth.user)
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -36,19 +36,13 @@ const RenameChannelModal = () => {
         .max(20, t('modals.lengthError'))
         .notOneOf(channelNames, t('modals.uniqueError')),
     }),
-    onSubmit: async ({ name }, { setSubmitting, setErrors }) => {
+    onSubmit: async ({ name }, { setErrors }) => {
+      setIsSubmitting(true)
       try {
         const cleanedName = leoProfanity.clean(name.trim())
-
-        const response = await axios.patch(
-          `/api/v1/channels/${channelId}`,
-          { name: cleanedName },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        )
+        const response = await axios.patch(`/channels/${channelId}`, {
+          name: cleanedName,
+        })
         dispatch(renameChannel(response.data))
         dispatch(closeModal())
         toast.success(t('toasts.channelRenamed'))
@@ -56,7 +50,7 @@ const RenameChannelModal = () => {
         toast.error(t('toasts.networkError'))
         setErrors({ name: t('modals.renameError') })
       } finally {
-        setSubmitting(false)
+        setIsSubmitting(false)
       }
     },
   })
@@ -77,6 +71,7 @@ const RenameChannelModal = () => {
               isInvalid={formik.touched.name && !!formik.errors.name}
               ref={inputRef}
               autoFocus
+              autoComplete="off"
             />
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
@@ -84,14 +79,14 @@ const RenameChannelModal = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => dispatch(closeModal())}>
+          <Button
+            variant="secondary"
+            onClick={() => dispatch(closeModal())}
+            disabled={isSubmitting}
+          >
             {t('modals.cancel')}
           </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={formik.isSubmitting}
-          >
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
             {t('modals.confirm')}
           </Button>
         </Modal.Footer>

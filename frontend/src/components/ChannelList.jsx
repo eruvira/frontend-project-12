@@ -40,7 +40,7 @@ const ChannelList = () => {
         </Button>
       </div>
 
-      <ul className="list-group overflow-auto">
+      <ul className="list-group">
         {channels.map((channel) => {
           const isActive = channel.id === currentChannelId
           const variant = isActive ? 'primary' : 'light'

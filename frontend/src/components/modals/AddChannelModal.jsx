@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import axios from 'axios'
+import axios from '../../api/axiosInstance'
 import { setCurrentChannelId } from '../../store/slices/currentChannelSlice'
 import { closeModal } from '../../store/slices/modalSlice'
 import { useTranslation } from 'react-i18next'
@@ -14,8 +14,8 @@ const AddChannelModal = () => {
   const inputRef = useRef(null)
   const channels = useSelector((state) => state.channels)
   const existingNames = channels.map((c) => c.name)
-  const { token } = useSelector((state) => state.auth.user)
   const { t } = useTranslation()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -33,24 +33,17 @@ const AddChannelModal = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
+      setIsSubmitting(true)
       const cleanedName = leoProfanity.clean(values.name.trim())
-
-      const response = await axios.post(
-        '/api/v1/channels',
-        { name: cleanedName },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
-      const { id } = response.data
-      dispatch(setCurrentChannelId(id))
+      const { data } = await axios.post('/channels', { name: cleanedName })
+      dispatch(setCurrentChannelId(data.id))
       dispatch(closeModal())
       toast.success(t('toasts.channelCreated'))
     } catch (e) {
       console.error(e)
       toast.error(t('toasts.networkError'))
     } finally {
-      actions.setSubmitting(false)
+      setIsSubmitting(false)
     }
   }
 
@@ -64,30 +57,29 @@ const AddChannelModal = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field
-                  name="name"
-                  innerRef={inputRef}
-                  className="form-control mb-2"
-                  placeholder={t('modals.channelName')}
-                />
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="text-danger mb-2"
-                />
-                <div className="d-flex justify-content-end">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={isSubmitting}
-                  >
-                    {t('modals.add')}
-                  </button>
-                </div>
-              </Form>
-            )}
+            <Form>
+              <Field
+                name="name"
+                innerRef={inputRef}
+                className="form-control mb-2"
+                placeholder={t('modals.channelName')}
+                autoComplete="off"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-danger mb-2"
+              />
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isSubmitting}
+                >
+                  {t('modals.add')}
+                </button>
+              </div>
+            </Form>
           </Formik>
         </div>
       </div>

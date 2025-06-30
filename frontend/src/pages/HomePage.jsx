@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
+import axios from '../api/axiosInstance'
 import { setChannels } from '../store/slices/channelsSlice'
 import { setMessages } from '../store/slices/messagesSlice'
 import ChannelList from '../components/ChannelList'
@@ -16,27 +16,24 @@ const HomePage = () => {
   const { token } = useSelector((state) => state.auth.user)
 
   useChatSocket()
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const channelsResponse = await axios.get('/api/v1/channels', {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        dispatch(setChannels(channelsResponse.data))
+        const [channelsRes, messagesRes] = await Promise.all([
+          axios.get('/channels'),
+          axios.get('/messages'),
+        ])
 
-        const messagesResponse = await axios.get('/api/v1/messages', {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        dispatch(setMessages(messagesResponse.data))
+        dispatch(setChannels(channelsRes.data))
+        dispatch(setMessages(messagesRes.data))
       } catch (err) {
-        toast.error(t('toasts.networkError'))
         console.error('Ошибка при загрузке каналов и сообщений:', err)
+        toast.error(t('toasts.networkError'))
       }
     }
 
     fetchData()
-  }, [dispatch, token])
+  }, [dispatch, t])
 
   return (
     <div className="container mt-5">

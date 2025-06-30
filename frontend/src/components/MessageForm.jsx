@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
+import axios from '../api/axiosInstance'
 import { useTranslation } from 'react-i18next'
 import leoProfanity from 'leo-profanity'
 import { toast } from 'react-toastify'
@@ -9,14 +9,15 @@ const MessageForm = () => {
   const [body, setBody] = useState('')
   const [error, setError] = useState(null)
   const { t } = useTranslation()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const currentChannelId = useSelector((state) => state.currentChannel)
-  const { token, username } = useSelector((state) => state.auth.user)
+  const { username } = useSelector((state) => state.auth.user)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
-
+    setIsSubmitting(true)
     const cleanedBody = leoProfanity.clean(body)
 
     const newMessage = {
@@ -26,16 +27,14 @@ const MessageForm = () => {
     }
 
     try {
-      await axios.post('/api/v1/messages', newMessage, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      await axios.post('/messages', newMessage)
       setBody('')
     } catch (err) {
       console.error(err)
       toast.error(t('toasts.networkError'))
       setError(t('chat.sendError'))
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -49,8 +48,13 @@ const MessageForm = () => {
           value={body}
           onChange={(e) => setBody(e.target.value)}
           required
+          autoComplete="off"
         />
-        <button className="btn btn-primary" type="submit">
+        <button
+          className="btn btn-primary"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {t('chat.send')}
         </button>
       </div>
