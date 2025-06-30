@@ -1,5 +1,8 @@
+install:
+	npm install && cd frontend && npm install
+
 build:
-	npm install && cd frontend && npm install && npm run build
+	make install && cd frontend && npm run build
 
 start:
 	npx start-server --static frontend/dist
