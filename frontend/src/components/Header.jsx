@@ -18,7 +18,9 @@ const Header = () => {
   return (
     <header className="shadow-sm bg-white mb-4">
       <div className="container d-flex justify-content-between align-items-center py-3">
-        <Link to="/" className="text-decoration-none text-primary h4 mb-0">{t('nav.logo')}</Link>
+        <Link to="/" className="text-decoration-none text-primary h4 mb-0">
+          {t('nav.logo')}
+        </Link>
         {user && (
           <button
             type="button"

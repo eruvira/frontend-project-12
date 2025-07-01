@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap'
 import { setCurrentChannelId } from '../store/slices/currentChannelSlice'
@@ -60,7 +59,9 @@ const ChannelList = () => {
                       id={`dropdown-${channel.id}`}
                       className="rounded-end"
                     >
-                      <span className="visually-hidden">Управление каналом</span>
+                      <span className="visually-hidden">
+                        Управление каналом
+                      </span>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
@@ -72,7 +73,7 @@ const ChannelList = () => {
                       <Dropdown.Item
                         onClick={() => handleRemoveChannel(channel.id)}
                       >
-                          <span className="visually-hidden">Удалить</span>
+                        <span className="visually-hidden">Удалить</span>
                         {t('modals.delete')}
                       </Dropdown.Item>
                     </Dropdown.Menu>

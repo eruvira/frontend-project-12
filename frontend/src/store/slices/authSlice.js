@@ -6,7 +6,7 @@ const initialUser = savedUser ? JSON.parse(savedUser) : null
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: initialUser, 
+    user: initialUser,
   },
   reducers: {
     login: (state, action) => {

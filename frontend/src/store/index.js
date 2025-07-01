@@ -5,7 +5,6 @@ import authReducer from './slices/authSlice'
 import currentChannelReducer from './slices/currentChannelSlice'
 import modalReducer from './slices/modalSlice'
 
-
 const store = configureStore({
   reducer: {
     channels: channelsReducer,

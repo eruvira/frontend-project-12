@@ -15,7 +15,7 @@ const useChatSocket = () => {
     })
 
     socket.on('newChannel', (channel) => {
-      dispatch(addChannel(channel)) 
+      dispatch(addChannel(channel))
     })
 
     return () => {

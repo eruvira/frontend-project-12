@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
@@ -58,7 +58,11 @@ const AddChannelModal = () => {
             onSubmit={handleSubmit}
           >
             <Form>
-              <label htmlFor="channelName" for="channelName" className="form-label">
+              <label
+                htmlFor="channelName"
+                for="channelName"
+                className="form-label"
+              >
                 {t('modals.channelName')}
               </label>
               <Field

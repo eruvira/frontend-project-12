@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Form, Button, FloatingLabel } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -66,7 +66,7 @@ const SignupForm = () => {
   })
 
   return (
-    <div className='d-flex'>
+    <div className="d-flex">
       <div className="col-5">
         <img src={signupImage} alt="signup" />
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
@@ -74,7 +74,9 @@ const RenameChannelModal = () => {
               autoComplete="off"
               id="name"
             />
-            <label className="visually-hidden" for="name">Имя канала</label>
+            <label className="visually-hidden" for="name">
+              Имя канала
+            </label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>

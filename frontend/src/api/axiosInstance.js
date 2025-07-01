@@ -1,5 +1,5 @@
 import axios from 'axios'
-import  store  from '../store/index'
+import store from '../store/index'
 import { logout } from '../store/slices/authSlice'
 import { toast } from 'react-toastify'
 
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
       store.dispatch(logout())
     }
     return Promise.reject(error)
-  }
+  },
 )
 
 export default axiosInstance
