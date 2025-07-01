@@ -58,7 +58,7 @@ const AddChannelModal = () => {
             onSubmit={handleSubmit}
           >
             <Form>
-              <label htmlFor="channelName" className="form-label">
+              <label htmlFor="channelName" for="channelName" className="form-label">
                 {t('modals.channelName')}
               </label>
               <Field
