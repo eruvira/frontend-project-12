@@ -72,7 +72,9 @@ const RenameChannelModal = () => {
               ref={inputRef}
               autoFocus
               autoComplete="off"
+              id="name"
             />
+            <label class="visually-hidden" for="name">Имя канала</label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
