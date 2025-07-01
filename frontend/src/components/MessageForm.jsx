@@ -49,6 +49,7 @@ const MessageForm = () => {
           onChange={(e) => setBody(e.target.value)}
           required
           autoComplete="off"
+          aria-label="Новое сообщение"
         />
         <button
           className="btn btn-primary"
