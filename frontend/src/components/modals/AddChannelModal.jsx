@@ -58,10 +58,14 @@ const AddChannelModal = () => {
             onSubmit={handleSubmit}
           >
             <Form>
+              <label htmlFor="channelName" className="form-label">
+                {t('modals.channelName')}
+              </label>
               <Field
+                id="channelName"
                 name="name"
                 innerRef={inputRef}
-                className="form-control mb-2"
+                className="form-control"
                 placeholder={t('modals.channelName')}
                 autoComplete="off"
               />
