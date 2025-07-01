@@ -13,7 +13,6 @@ import { toast } from 'react-toastify'
 const HomePage = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const { token } = useSelector((state) => state.auth.user)
 
   useChatSocket()
   useEffect(() => {
@@ -26,7 +25,8 @@ const HomePage = () => {
 
         dispatch(setChannels(channelsRes.data))
         dispatch(setMessages(messagesRes.data))
-      } catch (err) {
+      }
+      catch (err) {
         console.error('Ошибка при загрузке каналов и сообщений:', err)
         toast.error(t('toasts.networkError'))
       }
@@ -42,7 +42,9 @@ const HomePage = () => {
           <ChannelList />
         </div>
         <div className="col-8">
-          <h4> {t('chat.messages')}</h4>
+          <h4> 
+            {t('chat.messages')}
+          </h4>
           <MessageList />
           <MessageForm />
         </div>

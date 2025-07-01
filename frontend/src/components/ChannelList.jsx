@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 const ChannelList = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const channels = useSelector((state) => state.channels)
-  const currentChannelId = useSelector((state) => state.currentChannel)
+  const channels = useSelector(state => state.channels)
+  const currentChannelId = useSelector(state => state.currentChannel)
 
   const handleSelectChannel = (id) => {
     dispatch(setCurrentChannelId(id))
@@ -48,7 +48,8 @@ const ChannelList = () => {
                   className="w-100 text-start rounded-start"
                   onClick={() => handleSelectChannel(channel.id)}
                 >
-                  # {channel.name}
+                  # 
+                  {channel.name}
                 </Button>
 
                 {channel.removable && (

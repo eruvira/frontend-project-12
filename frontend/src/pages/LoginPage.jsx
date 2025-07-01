@@ -35,14 +35,17 @@ const LoginPage = () => {
 
               dispatch(login({ token, username }))
               navigate('/')
-            } catch (err) {
+            }
+            catch (err) {
               if (err.response?.status === 401) {
                 setAuthFailed(true)
-              } else {
+              }
+              else {
                 toast.error(t('toasts.networkError'))
                 console.error('Login error:', err)
               }
-            } finally {
+            }
+            finally {
               setIsSubmitting(false)
             }
           }}
@@ -93,7 +96,9 @@ const LoginPage = () => {
           )}
         </Formik>
         <div className="text-center mt-3">
-          <span> {t('login.signupPrompt')}</span>
+          <span> 
+            {t('login.signupPrompt')}
+          </span>
           <Link to="/signup">{t('login.signUp')}</Link>
         </div>
       </div>

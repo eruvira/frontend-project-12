@@ -1,11 +1,10 @@
-import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../store/slices/authSlice'
 import { useTranslation } from 'react-i18next'
 
 const Header = () => {
-  const user = useSelector((state) => state.auth.user)
+  const user = useSelector(state => state.auth.user)
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()

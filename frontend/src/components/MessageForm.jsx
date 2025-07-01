@@ -11,8 +11,8 @@ const MessageForm = () => {
   const { t } = useTranslation()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const currentChannelId = useSelector((state) => state.currentChannel)
-  const { username } = useSelector((state) => state.auth.user)
+  const currentChannelId = useSelector(state => state.currentChannel)
+  const { username } = useSelector(state => state.auth.user)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -29,11 +29,13 @@ const MessageForm = () => {
     try {
       await axios.post('/messages', newMessage)
       setBody('')
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(err)
       toast.error(t('toasts.networkError'))
       setError(t('chat.sendError'))
-    } finally {
+    } 
+    finally {
       setIsSubmitting(false)
     }
   }
@@ -46,7 +48,7 @@ const MessageForm = () => {
           type="text"
           placeholder={t('chat.placeholder')}
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={e => setBody(e.target.value)}
           required
           autoComplete="off"
           aria-label="Новое сообщение"

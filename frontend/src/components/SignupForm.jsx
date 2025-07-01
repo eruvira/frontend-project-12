@@ -35,7 +35,7 @@ const SignupForm = () => {
         .oneOf([Yup.ref('password')], t('modals.passwordMatchError'))
         .required(t('modals.requiredError')),
     }),
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
+    onSubmit: async (values, { setErrors }) => {
       setIsSubmitting(true)
       try {
         const { data } = await axios.post('/signup', {
@@ -50,16 +50,19 @@ const SignupForm = () => {
 
         dispatch(login(userData))
         navigate('/')
-      } catch (err) {
+      }
+      catch (err) {
         if (err.response?.status === 409) {
           toast.error(t('signup.userExists'))
           setErrors({ username: t('signup.userExists') })
-        } else {
+        }
+        else {
           console.error(err)
           toast.error(t('signup.authError'))
           setErrors({ username: t('signup.authError') })
         }
-      } finally {
+      }
+      finally {
         setIsSubmitting(false)
       }
     },
@@ -82,7 +85,8 @@ const SignupForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.username}
-              isInvalid={formik.touched.username && !!formik.errors.username}
+              isInvalid={formik.touched.username 
+                && !!formik.errors.username}
               autoComplete="off"
             />
             <Form.Control.Feedback type="invalid">

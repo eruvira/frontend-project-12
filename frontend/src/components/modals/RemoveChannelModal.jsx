@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch()
-  const { channelId } = useSelector((state) => state.modal)
+  const { channelId } = useSelector(state => state.modal)
   const { t } = useTranslation()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -22,10 +22,12 @@ const RemoveChannelModal = () => {
       dispatch(setCurrentChannelId(1))
       dispatch(closeModal())
       toast.success(t('toasts.channelRemoved'))
-    } catch (error) {
+    }
+    catch (error) {
       toast.error(t('toasts.networkError'))
       console.error('Ошибка удаления канала:', error)
-    } finally {
+    }
+    finally {
       setIsSubmitting(false)
     }
   }

@@ -12,8 +12,8 @@ import leoProfanity from 'leo-profanity'
 const AddChannelModal = () => {
   const dispatch = useDispatch()
   const inputRef = useRef(null)
-  const channels = useSelector((state) => state.channels)
-  const existingNames = channels.map((c) => c.name)
+  const channels = useSelector(state => state.channels)
+  const existingNames = channels.map(c => c.name)
   const { t } = useTranslation()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -31,7 +31,7 @@ const AddChannelModal = () => {
       .notOneOf(existingNames, t('modals.uniqueError')),
   })
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values) => {
     try {
       setIsSubmitting(true)
       const cleanedName = leoProfanity.clean(values.name.trim())
@@ -39,10 +39,12 @@ const AddChannelModal = () => {
       dispatch(setCurrentChannelId(data.id))
       dispatch(closeModal())
       toast.success(t('toasts.channelCreated'))
-    } catch (e) {
+    }
+    catch (e) {
       console.error(e)
       toast.error(t('toasts.networkError'))
-    } finally {
+    }
+    finally {
       setIsSubmitting(false)
     }
   }
@@ -60,7 +62,6 @@ const AddChannelModal = () => {
             <Form>
               <label
                 htmlFor="channelName"
-                for="channelName"
                 className="form-label"
               >
                 {t('modals.channelName')}

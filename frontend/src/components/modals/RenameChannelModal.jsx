@@ -14,16 +14,16 @@ const RenameChannelModal = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { channelId } = useSelector((state) => state.modal)
-  const channels = useSelector((state) => state.channels)
-  const channel = channels.find((c) => c.id === channelId)
+  const { channelId } = useSelector(state=> state.modal)
+  const channels = useSelector(state => state.channels)
+  const channel = channels.find(c => c.id === channelId)
   const inputRef = useRef(null)
 
   useEffect(() => {
     inputRef.current?.select()
   }, [])
 
-  const channelNames = channels.map((c) => c.name)
+  const channelNames = channels.map(c => c.name)
 
   const formik = useFormik({
     initialValues: {
@@ -46,10 +46,13 @@ const RenameChannelModal = () => {
         dispatch(renameChannel(response.data))
         dispatch(closeModal())
         toast.success(t('toasts.channelRenamed'))
-      } catch (err) {
+      }
+      catch (error) {
+        console.log(error)
         toast.error(t('toasts.networkError'))
         setErrors({ name: t('modals.renameError') })
-      } finally {
+      }
+      finally {
         setIsSubmitting(false)
       }
     },
@@ -74,7 +77,7 @@ const RenameChannelModal = () => {
               autoComplete="off"
               id="name"
             />
-            <label className="visually-hidden" for="name">
+            <label className="visually-hidden" htmlFor="name">
               Имя канала
             </label>
             <Form.Control.Feedback type="invalid">

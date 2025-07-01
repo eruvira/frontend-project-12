@@ -11,7 +11,7 @@ const modalsMap = {
 }
 
 const Modals = () => {
-  const { type } = useSelector((state) => state.modal)
+  const { type } = useSelector(state => state.modal)
 
   if (!type) return null
 
