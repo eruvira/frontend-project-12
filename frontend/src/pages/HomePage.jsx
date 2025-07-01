@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import axios from '../api/axiosInstance'
 import { setChannels } from '../store/slices/channelsSlice'
 import { setMessages } from '../store/slices/messagesSlice'
@@ -42,7 +42,7 @@ const HomePage = () => {
           <ChannelList />
         </div>
         <div className="col-8">
-          <h4> 
+          <h4>
             {t('chat.messages')}
           </h4>
           <MessageList />

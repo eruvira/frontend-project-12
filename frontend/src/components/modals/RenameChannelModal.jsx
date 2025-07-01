@@ -14,7 +14,7 @@ const RenameChannelModal = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { channelId } = useSelector(state=> state.modal)
+  const { channelId } = useSelector(state => state.modal)
   const channels = useSelector(state => state.channels)
   const channel = channels.find(c => c.id === channelId)
   const inputRef = useRef(null)

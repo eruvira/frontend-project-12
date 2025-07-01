@@ -85,7 +85,7 @@ const SignupForm = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.username}
-              isInvalid={formik.touched.username 
+              isInvalid={formik.touched.username
                 && !!formik.errors.username}
               autoComplete="off"
             />
@@ -125,8 +125,8 @@ const SignupForm = () => {
               onBlur={formik.handleBlur}
               value={formik.values.confirmPassword}
               isInvalid={
-                formik.touched.confirmPassword &&
-                !!formik.errors.confirmPassword
+                formik.touched.confirmPassword
+                && !!formik.errors.confirmPassword
               }
             />
             <Form.Control.Feedback type="invalid">

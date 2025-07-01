@@ -48,7 +48,7 @@ const ChannelList = () => {
                   className="w-100 text-start rounded-start"
                   onClick={() => handleSelectChannel(channel.id)}
                 >
-                  # 
+                  #
                   {channel.name}
                 </Button>
 

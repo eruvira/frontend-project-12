@@ -96,7 +96,7 @@ const LoginPage = () => {
           )}
         </Formik>
         <div className="text-center mt-3">
-          <span> 
+          <span>
             {t('login.signupPrompt')}
           </span>
           <Link to="/signup">{t('login.signUp')}</Link>

@@ -9,17 +9,17 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => (
-  (  
+  (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route
             index
-            element={
+            element={(
               <PrivateRoute>
                 <HomePage />
               </PrivateRoute>
-            }
+            )}
           />
           <Route path="login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />

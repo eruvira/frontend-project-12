@@ -29,12 +29,12 @@ const MessageForm = () => {
     try {
       await axios.post('/messages', newMessage)
       setBody('')
-    } 
+    }
     catch (err) {
       console.error(err)
       toast.error(t('toasts.networkError'))
       setError(t('chat.sendError'))
-    } 
+    }
     finally {
       setIsSubmitting(false)
     }

@@ -6,7 +6,7 @@ const Messages = () => {
   const currentChannelId = useSelector(state => state.currentChannel)
   const endRef = useRef(null)
 
-  const filteredMessages = messages.filter(m => m.channelId === currentChannelId,)
+  const filteredMessages = messages.filter(m => m.channelId === currentChannelId)
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -17,7 +17,7 @@ const Messages = () => {
       {filteredMessages.map(msg => (
         <div key={msg.id} className="text-start text-wrap">
           <b>{msg.username}</b>
-          : 
+          :
           {msg.body}
         </div>
       ))}
