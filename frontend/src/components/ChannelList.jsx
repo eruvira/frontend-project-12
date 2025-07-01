@@ -31,11 +31,7 @@ const ChannelList = () => {
     <div className="p-3 border-end h-100 bg-light">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5 className="mb-0">{t('chat.channels')}</h5>
-        <Button
-          variant="outline-primary"
-          size="sm"
-          onClick={handleAddChannel}
-        >
+        <Button variant="outline-primary" size="sm" onClick={handleAddChannel}>
           + Добавить
         </Button>
       </div>
@@ -57,13 +53,15 @@ const ChannelList = () => {
                 </Button>
 
                 {channel.removable && (
-                  <Dropdown as={ButtonGroup} >
+                  <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle
                       split
                       variant={variant}
                       id={`dropdown-${channel.id}`}
                       className="rounded-end"
-                    />
+                    >
+                      <span class="visually-hidden">Управление каналом</span>
+                    </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
                         onClick={() => handleRenameChannel(channel.id)}
