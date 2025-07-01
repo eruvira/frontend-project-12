@@ -1,7 +1,7 @@
 {
   "login": {
     "header": "Войти",
-    "username": "Имя пользователя",
+    "username": "Ваш ник",
     "password": "Пароль",
     "submit": "Войти",
     "signupPrompt": "Нет аккаунта? ",
