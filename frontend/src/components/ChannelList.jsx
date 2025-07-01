@@ -60,19 +60,19 @@ const ChannelList = () => {
                       id={`dropdown-${channel.id}`}
                       className="rounded-end"
                     >
-                      <span class="invisible">Управление каналом</span>
+                      <span className="visually-hidden">Управление каналом</span>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item
                         onClick={() => handleRenameChannel(channel.id)}
                       >
-                        <span class="invisible">Переименовать</span>
+                        <span className="visually-hidden">Переименовать</span>
                         {t('chat.rename')}
                       </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => handleRemoveChannel(channel.id)}
                       >
-                          <span class="invisible">Удалить</span>
+                          <span className="visually-hidden">Удалить</span>
                         {t('modals.delete')}
                       </Dropdown.Item>
                     </Dropdown.Menu>
