@@ -66,6 +66,7 @@ const ChannelList = () => {
                       <Dropdown.Item
                         onClick={() => handleRenameChannel(channel.id)}
                       >
+                        <span class="visually-hidden">Переименовать</span>
                         {t('chat.rename')}
                       </Dropdown.Item>
                       <Dropdown.Item
